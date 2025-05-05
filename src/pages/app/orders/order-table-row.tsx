@@ -1,6 +1,9 @@
 import { Button } from "@/components/ui/button";
+import { Dialog } from "@/components/ui/dialog";
 import { TableCell, TableRow } from "@/components/ui/table";
+import { DialogTrigger } from "@radix-ui/react-dialog";
 import { ArrowRight, Search, X } from "lucide-react";
+import { OrdersDetails } from "./orders-details";
 
 // export interface OrderTableRowProps {
   
@@ -10,10 +13,15 @@ export function OrderTableRow() {
   return (
     <TableRow>
       <TableCell>
-        <Button variant="outline" size="sm">
-          <Search className="w-3 h-3" />
-          <span className="sr-only">Detalhes do pedido</span>
-        </Button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button variant="outline" size="sm">
+              <Search className="w-3 h-3" />
+              <span className="sr-only">Detalhes do pedido</span>
+            </Button>
+          </DialogTrigger>
+          <OrdersDetails />
+        </Dialog>
       </TableCell>
       <TableCell className="font-mono text-xs font-medium">
         12312n12n3nnn123nknosda
