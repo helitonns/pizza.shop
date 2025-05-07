@@ -13,7 +13,7 @@ import { Textarea } from "./ui/textarea";
 
 const storeProfileSchema = z.object({
   name: z.string().min(1),
-  description: z.string()
+  description: z.string().nullable()
 });
 
 type StoreProfileSchema = z.infer<typeof storeProfileSchema>
@@ -36,10 +36,8 @@ export function StoreProfileDialog(){
     }
   });
 
-  const { mutateAsync: updateProfileFn} = useMutation({
-    mutationFn: updateProfile,
-    onSuccess(_, {name, description}){
-      const cached = queryClient.getQueryData<GetManagedRestaurantResponse>(["managed-restaurant"]);
+  function updateManagedRestaurantCache({name, description}: StoreProfileSchema){
+    const cached = queryClient.getQueryData<GetManagedRestaurantResponse>(["managed-restaurant"]);
 
       if(cached){
         queryClient.setQueryData<GetManagedRestaurantResponse>(["managed-restaurant"], {
@@ -47,6 +45,25 @@ export function StoreProfileDialog(){
           name,
           description
         });
+      }
+
+      return { cached };
+  }
+
+  //interface otimista, a invez de utlizar o onSuccess, que executa so depois da requisicao,
+  //trocamos por onMutatio, que executa antes da requisicao,
+  //caso ocorra erro, reexecutamos a funcao para atualizar com os dados antes do erro
+  //estregia que deve ser usada quando a possibilidade de erros e baixa
+  const { mutateAsync: updateProfileFn} = useMutation({
+    mutationFn: updateProfile,
+    onMutate({name, description}){
+      const { cached } = updateManagedRestaurantCache({name, description});
+
+      return {previousProfile: cached};
+    },
+    onError(_,__, context){
+      if(context?.previousProfile){
+        updateManagedRestaurantCache(context.previousProfile);
       }
     }
   });
