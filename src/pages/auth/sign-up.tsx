@@ -1,6 +1,8 @@
+import { registerRestaurant } from "@/api/register-restaurant";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
+import { useMutation } from "@tanstack/react-query";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
@@ -21,16 +23,24 @@ type SignUpForm = z.infer<typeof signUpForm>;
 export function SignUp(){
   const { register, handleSubmit, formState: {isSubmitting} } = useForm<SignUpForm>();
   const navigate = useNavigate();
+
+  const { mutateAsync: registerRestaurantFn } = useMutation({
+    mutationFn: registerRestaurant
+  });
   
   async function handlesignUp(data: SignUpForm){
     try {
-      console.log(data);
-      await new Promise((resolve)=> setTimeout(resolve, 2000));
+      registerRestaurantFn({
+        restaurantName: data.restaurantName,
+        managerName: data.managerName,
+        email: data.email,
+        phone: data.phone,
+      });
 
-      toast.success("Erro ao castrar estabelecimento", {
+      toast.success("Estabelecimento cadastrado com sucesso", {
         action: {
           label: "Login",
-          onClick: ()=> navigate("/sign-in")
+          onClick: ()=> navigate(`/sign-in?email=${data.email}`)
         }
       });
     } catch (error) {
