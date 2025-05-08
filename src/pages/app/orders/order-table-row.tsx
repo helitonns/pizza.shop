@@ -5,6 +5,7 @@ import { DialogTrigger } from "@radix-ui/react-dialog";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { ArrowRight, Search, X } from "lucide-react";
+import { useState } from "react";
 import { OrderStatus } from "./order-status";
 import { OrdersDetails } from "./orders-details";
 
@@ -19,17 +20,19 @@ export interface OrderTableRowProps {
 }
 
 export function OrderTableRow({ order }: OrderTableRowProps) {
+  const [isDetailsOpden, setIsDetailsOpden] = useState(false);
+
   return (
     <TableRow>
       <TableCell>
-        <Dialog>
+        <Dialog open={isDetailsOpden} onOpenChange={setIsDetailsOpden}>
           <DialogTrigger asChild>
             <Button variant="outline" size="sm">
               <Search className="w-3 h-3" />
               <span className="sr-only">Detalhes do pedido</span>
             </Button>
           </DialogTrigger>
-          <OrdersDetails />
+          <OrdersDetails open={isDetailsOpden} orderId={order.orderId} />
         </Dialog>
       </TableCell>
       <TableCell className="font-mono text-xs font-medium">
@@ -48,7 +51,7 @@ export function OrderTableRow({ order }: OrderTableRowProps) {
         {order.customerName}
       </TableCell>
       <TableCell className="font-medium">
-        {order.total.toLocaleString("pt-BR", { 
+        {(order.total/100).toLocaleString("pt-BR", { 
           style:"currency",
           currency: "BRL" 
         })}
