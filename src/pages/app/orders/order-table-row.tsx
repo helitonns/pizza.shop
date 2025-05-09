@@ -82,8 +82,6 @@ export function OrderTableRow({ order }: OrderTableRowProps) {
     }
   });
   
-  
-
   return (
     <TableRow>
       <TableCell>
@@ -118,8 +116,6 @@ export function OrderTableRow({ order }: OrderTableRowProps) {
           currency: "BRL" 
         })}
       </TableCell>
-
-
 
       <TableCell>
         {order.status === "pending" && (
@@ -158,9 +154,6 @@ export function OrderTableRow({ order }: OrderTableRowProps) {
           </Button>
         )}
       </TableCell>
-
-
-
 
       <TableCell>
         <Button 
