@@ -28,14 +28,14 @@ export function Pagination({pageIndex, totalCount, perPage, onPageChange}: Pagin
             <span className="sr-only">Primeira página</span>
           </Button>
 
-          <Button onClick={()=> onPageChange(pageIndex - 1)} disabled={pageIndex === 0} variant="outline" className="w-8 h-8 p-0">
+          <Button onClick={()=> onPageChange(pageIndex - 1)} disabled={pageIndex === 0}  variant="outline" className="w-8 h-8 p-0">
             <ChevronLeft className="w-4 h-4"/>
-            <span className="sr-only">Próxima página</span>
+            <span className="sr-only">Página anteior</span>
           </Button>
 
           <Button onClick={()=> onPageChange(pageIndex + 1)} disabled={pages <= pageIndex + 1} variant="outline" className="w-8 h-8 p-0">
             <ChevronRight className="w-4 h-4"/>
-            <span className="sr-only">Página anteior</span>
+            <span className="sr-only">Próxima página</span>
           </Button>
           
           <Button onClick={()=> onPageChange(pages - 1)} disabled={pages <= pageIndex + 1} variant="outline" className="w-8 h-8 p-0">
