@@ -14,7 +14,6 @@ import { ArrowRight, Search, X } from "lucide-react";
 import { useState } from "react";
 import { OrderStatus } from "./order-status";
 import { OrdersDetails } from "./orders-details";
-
 //=============================================================================
 export interface OrderTableRowProps {
   order: {
@@ -116,7 +115,6 @@ export function OrderTableRow({ order }: OrderTableRowProps) {
           currency: "BRL" 
         })}
       </TableCell>
-
       <TableCell>
         {order.status === "pending" && (
           <Button 
@@ -154,7 +152,6 @@ export function OrderTableRow({ order }: OrderTableRowProps) {
           </Button>
         )}
       </TableCell>
-
       <TableCell>
         <Button 
           onClick={()=> calcelOrderFn({orderId: order.orderId})}
@@ -166,6 +163,7 @@ export function OrderTableRow({ order }: OrderTableRowProps) {
           Cancelar
         </Button>
       </TableCell>
+      
     </TableRow>
   );
 }
