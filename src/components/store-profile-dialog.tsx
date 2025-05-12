@@ -11,13 +11,13 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 
+//==========================================================================================
 const storeProfileSchema = z.object({
   name: z.string().min(1),
   description: z.string().nullable()
 });
 
 type StoreProfileSchema = z.infer<typeof storeProfileSchema>
-
 //==========================================================================================
 export function StoreProfileDialog(){
   const queryClient = useQueryClient();
@@ -76,6 +76,7 @@ export function StoreProfileDialog(){
       });
 
       toast.success("Perfil atualizado com sucesso!");
+      
     } catch (error) {
       toast.error("Falha ao atualizar o perfil, tente novamente!");
     }
@@ -111,7 +112,7 @@ export function StoreProfileDialog(){
           <DialogClose asChild>
             <Button type="button" variant="ghost">Cancelar</Button>
           </DialogClose>
-          <Button type="submit" variant="sucess" disabled={isSubmitting}>Salvar</Button>
+          <Button type="submit" variant="success" disabled={isSubmitting}>Salvar</Button>
         </DialogFooter>
       </form>
     </DialogContent>
