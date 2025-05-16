@@ -24,7 +24,7 @@ export function SignUp(){
   const { register, handleSubmit, formState: {isSubmitting} } = useForm<SignUpForm>();
   const navigate = useNavigate();
 
-  const { mutateAsync: registerRestaurantFn, isError } = useMutation({
+  const { mutateAsync: registerRestaurantFn } = useMutation({
     mutationFn: registerRestaurant
   });
   
@@ -37,16 +37,18 @@ export function SignUp(){
         phone: data.phone,
       });
 
-      if(isError){
+      // if(isError){
+
         toast.success("Estabelecimento cadastrado com sucesso", {
           action: {
             label: "Login",
             onClick: ()=> navigate(`/sign-in?email=${data.email}`)
           }
         });
-      }else {
-        toast.error("Erro ao castrar estabelecimento");
-      }
+
+      // }else {
+      //   toast.error("Erro ao castrar estabelecimento");
+      // }
       
     } catch (error) {
       toast.error("Erro ao castrar estabelecimento");
