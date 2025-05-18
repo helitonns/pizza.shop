@@ -14,6 +14,9 @@ test('update profile successfully', async ({ page }) => {
   expect(toast).toBeVisible();
 
   await page.getByRole("button", {name: "Close"}).click();
-  expect(page.getByRole("button", {name: "Rocket Pizza"})).toBeVisible();
+
+  //O await no expect faz com que o teste aguarde até que o expect seja concluído antes de 
+  // prosseguir. Isso evita erros causados por mudanças assíncronas na interface.
+  await expect(page.getByRole("button", {name: "Rocket Pizza"})).toBeVisible();
 
 });
